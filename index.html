@@ -207,7 +207,72 @@ function openCreator(type){
  document.getElementById('creator').scrollIntoView({behavior:'smooth'});
 }
 
-function createProject(){
+
+async function createProject(){
+
+ const anime = document.getElementById('anime').value.trim();
+ const type = document.getElementById('type').value;
+ const language = document.getElementById('language').value;
+ const duration = document.getElementById('duration').value;
+ const instructions = document.getElementById('instructions').value;
+
+ if(!anime){
+   alert('Please enter an Anime name!');
+   return;
+ }
+
+ const result = document.getElementById('result');
+
+ result.innerText = '⏳ AI is creating your script... Please wait!';
+
+ try {
+
+   const response = await fetch(
+     'https://anime-studio-ai.onrender.com/generate-script',
+     {
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json'
+       },
+       body: JSON.stringify({
+         anime: anime,
+         episode: 'Not specified',
+         video_type: type,
+         language: language,
+         duration: duration,
+         instructions: instructions
+       })
+     }
+   );
+
+   const data = await response.json();
+
+   if(!response.ok){
+     throw new Error(data.detail || 'AI generation failed');
+   }
+
+   result.innerText = data.script;
+
+   const copyButton = document.createElement('button');
+   copyButton.innerText = '📋 Copy Script';
+
+   copyButton.onclick = async function(){
+     await navigator.clipboard.writeText(data.script);
+     alert('Script copied!');
+   };
+
+   result.appendChild(copyButton);
+
+ } catch(error) {
+
+   result.innerText =
+     '❌ Error: ' + error.message +
+     '\nPlease try again later.';
+
+ }
+
+}
+ 
  const anime=document.getElementById('anime').value.trim();
  const type=document.getElementById('type').value;
  const language=document.getElementById('language').value;
