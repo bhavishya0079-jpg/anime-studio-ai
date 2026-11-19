@@ -1,9 +1,13 @@
 
 import os
+import logging
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from google import genai
+
+logging.basicConfig(level=logging.INFO)
 
 app = FastAPI(title="Anime Studio AI")
 
@@ -11,7 +15,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_methods=["GET", "POST"],
-    allow_headers=["Content-Type"],
+    allow_headers=["*"],
 )
 
 class ScriptRequest(BaseModel):
@@ -35,34 +39,36 @@ def generate_script(data: ScriptRequest):
     api_key = os.getenv("GEMINI_API_KEY")
 
     if not api_key:
+        logging.error("GEMINI_API_KEY is missing")
         raise HTTPException(
             status_code=500,
-            detail="AI API key is not configured."
+            detail="API key is missing in Render settings."
         )
 
     try:
         client = genai.Client(api_key=api_key)
 
         prompt = f"""
-You are a professional anime content scriptwriter.
+You are a professional anime explanation writer.
 
 Write an original and engaging {data.language} script.
 
-Anime/Topic: {data.anime}
+Anime: {data.anime}
 Episode: {data.episode}
-Video Type: {data.video_type}
+Type: {data.video_type}
 Duration: {data.duration}
-Extra Instructions: {data.instructions}
+
+Instructions: {data.instructions}
 
 Requirements:
-1. Use natural, engaging Hindi narration.
-2. Start with an interesting hook.
-3. Explain events clearly in your own words.
-4. Do not copy official dialogue or existing scripts.
-5. Do not invent episode facts. Mention uncertainty when needed.
-6. End with an engaging conclusion.
-7. Format the script for voiceover.
-8. Do not claim that the script guarantees copyright-free status.
+1. Start with an exciting hook.
+2. Use natural conversational language.
+3. Explain events in your own words.
+4. Avoid copied dialogue.
+5. Do not invent episode facts.
+6. Add suspense and emotion.
+7. End with an engaging conclusion.
+8. Make it suitable for YouTube narration.
 """
 
         response = client.models.generate_content(
@@ -71,21 +77,18 @@ Requirements:
         )
 
         if not response.text:
-            raise HTTPException(
-                status_code=502,
-                detail="AI returned an empty response."
-            )
+            raise ValueError("Empty AI response")
 
         return {
             "success": True,
             "script": response.text
         }
 
-    except HTTPException:
-        raise
-    except Exception:
+    except Exception as error:
+        logging.exception("GEMINI_GENERATION_ERROR")
+
         raise HTTPException(
             status_code=502,
-            detail="AI generation failed. Please try again later."
+            detail="AI generation failed. Check Render logs."
         )
-      
+
