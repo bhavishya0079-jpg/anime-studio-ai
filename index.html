@@ -278,26 +278,66 @@
 
     <!-- AI VOICE -->
 
-    <section class="panel" id="voicePanel">
+    
+<!-- AI VOICE STUDIO -->
+<section class="panel" id="voicePanel">
 
-        <h2>🎙️ AI Hindi Voice Studio</h2>
+    <h2>🎙️ AI Hindi Voice Studio</h2>
 
-        <label>Script for Voiceover</label>
-        <textarea
-            id="voiceText"
-            placeholder="Paste your Hindi script here..."
-        ></textarea>
+    <label>Script for Voiceover</label>
+    <textarea
+        id="voiceText"
+        placeholder="Paste your Hindi script here..."
+        rows="6"
+    ></textarea>
 
-        <label>Voice Language</label>
-        <select id="voiceLanguage">
-            <option>Hindi</option>
-        </select>
+    <label>AI Voice</label>
+    <select id="voiceName">
+        <option value="Kore">Kore - Female</option>
+        <option value="Aoede">Aoede - Female</option>
+        <option value="Leda">Leda - Female</option>
+        <option value="Zephyr">Zephyr - Female</option>
+        <option value="Puck">Puck - Male</option>
+        <option value="Charon">Charon - Male</option>
+        <option value="Fenrir">Fenrir - Male</option>
+        <option value="Orus">Orus - Male</option>
+    </select>
 
-        <div class="notice">
-            AI voice generation will be connected in a future update.
-        </div>
+    <label>Voice Style</label>
+    <select id="voiceStyle">
+        <option value="Natural, expressive Hindi narration">Natural</option>
+        <option value="Emotional storytelling in Hindi">Emotional</option>
+        <option value="Energetic anime narrator in Hindi">Energetic</option>
+        <option value="Calm and clear Hindi narration">Calm</option>
+    </select>
 
-    </section>
+    <button type="button" id="generateVoiceBtn">
+        🎙️ Generate AI Voice
+    </button>
+
+    <p id="voiceStatus" class="notice">
+        Your AI Voice Studio is ready!
+    </p>
+
+    <div id="voiceResult" hidden>
+        <h3>🎧 Generated Audio</h3>
+
+        <audio
+            id="voiceAudio"
+            controls
+            style="width:100%;"
+        ></audio>
+
+        <a
+            id="voiceDownload"
+            download="anime-voice.wav"
+        >
+            ⬇️ Download Voice
+        </a>
+    </div>
+
+</section>
+    
 
     <!-- HINDI DUBBING -->
 
