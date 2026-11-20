@@ -1,3 +1,4 @@
+
 import os
 import base64
 import logging
@@ -56,57 +57,52 @@ def generate_voice(request: VoiceRequest):
             detail="Invalid voice selected."
         )
 
-    if not request.text.strip():
-        raise HTTPException(
-            status_code=400,
-            detail="Please enter script text."
-        )
-
     try:
-        client = genai.Client(api_key=api_key)
+        client = genai.Client(
+            api_key=api_key,
+            http_options={
+                "api_version": "v1beta"
+            }
+        )
 
         interaction = client.interactions.create(
             model=MODEL,
-            input=[
-                {
-                    "type": "user_input",
-                    "content": [
-                        {
-                            "type": "text",
-                            "text": request.text,
-                            "annotations": [
-                                {
-                                    "type": "speech_metadata",
-                                    "style": request.style
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ],
+            input=[{
+                "type": "user_input",
+                "content": [{
+                    "type": "text",
+                    "text": request.text,
+                    "annotations": [{
+                        "type": "speech_metadata",
+                        "style": request.style
+                    }]
+                }]
+            }],
             response_format={
                 "type": "audio"
             },
             generation_config={
                 "speech_config": [
-                    {
-                        "voice": request.voice
-                    }
+                    {"voice": request.voice}
                 ]
             }
         )
 
-        audio_output = interaction.output_audio
-
-        if not audio_output or not audio_output.data:
+        if not interaction.output_audio:
             raise HTTPException(
                 status_code=502,
-                detail="Gemini did not return audio."
+                detail="Gemini returned no audio."
             )
 
-        audio_bytes = base64.b64decode(
-            audio_output.data
-        )
+        audio_data = interaction.output_audio.data
+
+        if not audio_data:
+            raise HTTPException(
+                status_code=502,
+                detail="Audio data is empty."
+            )
+
+        audio_bytes = base64.b64decode(audio_data)
 
         return Response(
             content=audio_bytes,
@@ -125,6 +121,6 @@ def generate_voice(request: VoiceRequest):
 
         raise HTTPException(
             status_code=500,
-            detail=f"Voice generation failed: {str(error)}"
+            detail="Voice generation failed: " + str(error)
         )
         
