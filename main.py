@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from google import genai
 from voice import router as voice_router
+from video import router as video_router
 logging.basicConfig(level=logging.INFO)
 
 app = FastAPI(title="Anime Studio AI")
