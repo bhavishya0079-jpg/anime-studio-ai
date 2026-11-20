@@ -6,7 +6,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from google import genai
-
+from voice import router as voice_router
 logging.basicConfig(level=logging.INFO)
 
 app = FastAPI(title="Anime Studio AI")
