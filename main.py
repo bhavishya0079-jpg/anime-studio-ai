@@ -12,6 +12,7 @@ logging.basicConfig(level=logging.INFO)
 
 app = FastAPI(title="Anime Studio AI")
 app.include_router(voice_router)
+app.include_router(video_router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
