@@ -22,7 +22,7 @@ const VoiceStudio = {
 
         button.disabled = true;
         button.textContent = "Generating Voice...";
-        status.textContent = "Please wait, AI is creating your voice...";
+        status.textContent = "Creating your AI voice...";
         result.hidden = true;
 
         try {
@@ -47,7 +47,7 @@ const VoiceStudio = {
                 try {
                     const error = await response.json();
                     message = error.detail || message;
-                } catch (_) {}
+                } catch (e) {}
 
                 throw new Error(message);
             }
@@ -55,7 +55,7 @@ const VoiceStudio = {
             const audioBlob = await response.blob();
 
             if (!audioBlob.size) {
-                throw new Error("Received empty audio file.");
+                throw new Error("Audio file is empty.");
             }
 
             if (this.audioUrl) {
@@ -71,7 +71,7 @@ const VoiceStudio = {
             status.textContent = "AI Voice generated successfully!";
 
         } catch (error) {
-            console.error("Voice error:", error);
+            console.error("Voice Error:", error);
             status.textContent = "Error: " + error.message;
 
         } finally {
@@ -81,14 +81,21 @@ const VoiceStudio = {
     }
 };
 
-document.addEventListener("DOMContentLoaded", () => {
+// Connect button after the HTML is available
+function connectVoiceButton() {
     const button = document.getElementById("generateVoiceBtn");
 
-    if (button) {
-        button.addEventListener("click", () => {
+    if (button && !button.dataset.voiceConnected) {
+        button.dataset.voiceConnected = "true";
+
+        button.addEventListener("click", function () {
             VoiceStudio.generate();
         });
     }
-});
+}
+
+connectVoiceButton();
+
+document.addEventListener("DOMContentLoaded", connectVoiceButton);
 
 window.VoiceStudio = VoiceStudio;
