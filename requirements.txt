@@ -2,3 +2,5 @@
 fastapi
 uvicorn
 google-genai>=2.25.0
+python-multipart
+imageio-ffmpeg
