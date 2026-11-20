@@ -2,694 +2,405 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anime Studio AI</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#090914">
+    <title>Anime Studio AI</title>
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
+    <link rel="stylesheet" href="assets/css/style.css">
 
-body{
- background:#090914;
- color:white;
- font-family:Arial,sans-serif;
- min-height:100vh;
-}
+    <style>
+        .notice {
+            background: #211a35;
+            border: 1px solid #49306b;
+            color: #d8c7f5;
+            padding: 14px;
+            border-radius: 10px;
+            margin-top: 12px;
+            line-height: 1.6;
+            font-size: 13px;
+        }
 
-header{
- padding:20px 6%;
- display:flex;
- justify-content:space-between;
- align-items:center;
- border-bottom:1px solid #27243b;
-}
+        .feature-status {
+            color: #c29aff;
+            font-size: 12px;
+            margin-top: 12px;
+        }
 
-.logo{
- font-size:24px;
- font-weight:bold;
- color:#b78aff;
-}
+        .panel h3 {
+            margin-bottom: 10px;
+        }
 
-.logo span{color:white}
+        .panel p {
+            color: #aaa;
+            line-height: 1.6;
+            font-size: 14px;
+        }
 
-.menu{color:#aaa;font-size:13px}
+        .panel button {
+            margin-right: 8px;
+        }
 
-.container{
- padding:35px 6%;
- max-width:1300px;
- margin:auto;
-}
+        .hero button {
+            margin-top: 18px;
+        }
 
-.hero{
- background:linear-gradient(120deg,#21133e,#111329);
- padding:35px;
- border:1px solid #49306b;
- border-radius:20px;
- margin-bottom:30px;
-}
+        button.secondary {
+            background: #29213d;
+        }
 
-.hero h1{
- font-size:32px;
- margin-bottom:12px;
-}
+        .small-note {
+            font-size: 12px;
+            color: #999;
+            margin-top: 8px;
+        }
+    </style>
 
-.hero p{
- color:#c1b8d4;
- line-height:1.7;
-}
-
-.tag{
- color:#c29aff;
- font-size:12px;
- margin-bottom:14px;
-}
-
-h2{
- font-size:21px;
- margin-bottom:18px;
-}
-
-.cards{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
- gap:18px;
- margin-bottom:35px;
-}
-
-.card{
- background:#151525;
- border:1px solid #29263e;
- padding:23px;
- border-radius:16px;
- transition:.2s;
-}
-
-.card:hover{
- border-color:#a36cff;
- transform:translateY(-3px);
-}
-
-.icon{
- font-size:30px;
- margin-bottom:15px;
-}
-
-.card h3{margin-bottom:10px}
-
-.card p{
- font-size:13px;
- color:#aaa;
- line-height:1.6;
-}
-
-button{
- background:#9555ee;
- color:white;
- border:0;
- border-radius:9px;
- padding:12px 18px;
- cursor:pointer;
- font-weight:bold;
- margin-top:15px;
-}
-
-button:hover{background:#ad7aff}
-
-button:disabled{
- opacity:.5;
- cursor:not-allowed;
-}
-
-.panel{
- background:#151525;
- border:1px solid #29263e;
- padding:25px;
- border-radius:16px;
- margin-bottom:25px;
-}
-
-input,select,textarea{
- width:100%;
- padding:13px;
- margin-top:10px;
- margin-bottom:18px;
- background:#0c0c19;
- border:1px solid #39334f;
- color:white;
- border-radius:9px;
- font-size:14px;
-}
-
-textarea{
- min-height:100px;
- resize:vertical;
-}
-
-label{
- font-size:14px;
- color:#ddd;
-}
-
-.result{
- color:#e5d8ff;
- line-height:1.8;
- white-space:pre-wrap;
- overflow-wrap:anywhere;
- margin-top:18px;
-}
-
-.status{
- color:#c29aff;
- margin-top:15px;
- font-size:14px;
-}
-
-.script-box{
- background:#0c0c19;
- border:1px solid #39334f;
- border-radius:12px;
- padding:18px;
- margin-top:15px;
- display:none;
-}
-
-.actions{
- display:flex;
- flex-wrap:wrap;
- gap:10px;
-}
-
-.secondary{
- background:#29213d;
-}
-
-.file-info{
- color:#c29aff;
- font-size:13px;
- margin-top:10px;
-}
-
-footer{
- text-align:center;
- color:#777;
- padding:30px;
- font-size:13px;
-}
-
-@media(max-width:600px){
- .hero h1{font-size:25px}
- .container{padding:22px 5%}
- header{padding:17px 5%}
- .logo{font-size:19px}
- .menu{font-size:10px}
- .panel{padding:18px}
-}
-</style>
+    <script defer src="assets/js/app.js"></script>
+    <script defer src="assets/js/script.js"></script>
+    <script defer src="assets/js/voice.js"></script>
+    <script defer src="assets/js/dubbing.js"></script>
+    <script defer src="assets/js/video-editor.js"></script>
+    <script defer src="assets/js/music.js"></script>
+    <script defer src="assets/js/youtube.js"></script>
 </head>
 
 <body>
 
 <header>
- <div class="logo">ANIME <span>STUDIO AI</span></div>
- <div class="menu">ADVANCED CREATOR</div>
+    <div class="logo">ANIME <span>STUDIO AI</span></div>
+    <div class="menu">ADVANCED CREATOR</div>
 </header>
 
 <main class="container">
 
-<section class="hero">
- <div class="tag">✦ YOUR AI CONTENT STUDIO</div>
+    <section class="hero">
+        <div class="tag">✦ YOUR AI CONTENT STUDIO</div>
 
- <h1>Create Anime Videos With AI</h1>
+        <h1>Create Anime Videos With AI</h1>
 
- <p>
- Create Hindi anime explanations, YouTube Shorts,
- voiceover scripts and professional video projects
- from one place.
- </p>
+        <p>
+            Create anime Shorts, Hindi explanations,
+            voiceover scripts and video projects
+            from one place.
+        </p>
 
- <button onclick="scrollToCreator()">
- Start Creating →
- </button>
-</section>
+        <button onclick="scrollToCreator()">
+            Start Creating →
+        </button>
+    </section>
 
-<h2>✦ Creative Studio</h2>
+    <h2>✦ Creative Studio</h2>
 
-<section class="cards">
+    <section class="cards">
 
-<div class="card">
- <div class="icon">🎬</div>
- <h3>Anime Shorts</h3>
- <p>Create engaging vertical YouTube Shorts scripts.</p>
- <button onclick="openCreator('Short Video')">
- Create Short
- </button>
-</div>
+        <div class="card">
+            <div class="icon">🎬</div>
+            <h3>Anime Shorts</h3>
+            <p>Create short anime video scripts.</p>
+            <button onclick="openCreator('Short Video')">
+                Create Short
+            </button>
+        </div>
 
-<div class="card">
- <div class="icon">📖</div>
- <h3>Anime Explanation</h3>
- <p>Create detailed Hindi anime explanation scripts.</p>
- <button onclick="openCreator('Anime Explanation')">
- Create Explanation
- </button>
-</div>
+        <div class="card">
+            <div class="icon">📖</div>
+            <h3>Anime Explanation</h3>
+            <p>Generate detailed anime explanation scripts.</p>
+            <button onclick="openCreator('Anime Explanation')">
+                Create Explanation
+            </button>
+        </div>
 
-<div class="card">
- <div class="icon">🎙️</div>
- <h3>AI Hindi Voice</h3>
- <p>Prepare natural Hindi voiceover scripts.</p>
- <button onclick="openCreator('Hindi Voiceover')">
- Create Voice Script
- </button>
-</div>
+        <div class="card">
+            <div class="icon">🎙️</div>
+            <h3>AI Hindi Voice</h3>
+            <p>Prepare scripts for Hindi voiceovers.</p>
+            <button onclick="scrollToFeature('voicePanel')">
+                Open Voice Studio
+            </button>
+            <div class="feature-status">Backend connection pending</div>
+        </div>
 
-<div class="card">
- <div class="icon">✂️</div>
- <h3>Video Editor</h3>
- <p>Choose your authorized video files for future editing.</p>
- <button onclick="scrollToUpload()">
- Open Editor
- </button>
-</div>
+        <div class="card">
+            <div class="icon">🌐</div>
+            <h3>Hindi Dubbing</h3>
+            <p>Plan Hindi dubbing for videos you have permission to use.</p>
+            <button onclick="scrollToFeature('dubbingPanel')">
+                Open Dubbing
+            </button>
+            <div class="feature-status">Backend connection pending</div>
+        </div>
 
-<div class="card">
- <div class="icon">🎵</div>
- <h3>Music Studio</h3>
- <p>Plan background music using licensed audio.</p>
- <button onclick="openCreator('Music Project')">
- Music Studio
- </button>
-</div>
+        <div class="card">
+            <div class="icon">✂️</div>
+            <h3>Video Editor</h3>
+            <p>Select a video for future editing features.</p>
+            <button onclick="scrollToUpload()">
+                Open Editor
+            </button>
+        </div>
 
-<div class="card">
- <div class="icon">📤</div>
- <h3>YouTube Upload</h3>
- <p>Prepare video publishing details.</p>
- <button onclick="openCreator('YouTube Upload')">
- Upload Studio
- </button>
-</div>
+        <div class="card">
+            <div class="icon">🎵</div>
+            <h3>Music Studio</h3>
+            <p>Plan background music for your projects.</p>
+            <button onclick="scrollToFeature('musicPanel')">
+                Open Music Studio
+            </button>
+            <div class="feature-status">Backend connection pending</div>
+        </div>
 
-</section>
+        <div class="card">
+            <div class="icon">📤</div>
+            <h3>YouTube Upload</h3>
+            <p>Prepare your video publishing details.</p>
+            <button onclick="scrollToFeature('youtubePanel')">
+                Open Upload Studio
+            </button>
+            <div class="feature-status">Connection pending</div>
+        </div>
 
-<!-- AI CREATOR -->
+    </section>
 
-<section class="panel" id="creator">
+    <!-- AI SCRIPT CREATOR -->
 
-<h2>✨ AI Project Creator</h2>
+    <section class="panel" id="creator">
 
-<label>Project Type</label>
+        <h2>✨ AI Project Creator</h2>
 
-<select id="type">
- <option>Anime Explanation</option>
- <option>Short Video</option>
- <option>Hindi Voiceover</option>
- <option>Music Project</option>
- <option>YouTube Upload</option>
-</select>
+        <label>Project Type</label>
+        <select id="type">
+            <option>Anime Explanation</option>
+            <option>Short Video</option>
+            <option>Hindi Voiceover</option>
+            <option>Music Project</option>
+            <option>YouTube Upload</option>
+        </select>
 
-<label>Anime Name / Topic</label>
+        <label>Anime Name / Topic</label>
+        <input
+            id="anime"
+            type="text"
+            placeholder="Example: Naruto, One Piece..."
+        >
 
-<input
- id="anime"
- type="text"
- placeholder="Example: Naruto, One Piece..."
->
+        <label>Episode Number (Optional)</label>
+        <input
+            id="episode"
+            type="text"
+            placeholder="Example: Episode 1"
+        >
 
-<label>Episode Number (Optional)</label>
+        <label>Video Language</label>
+        <select id="language">
+            <option>Hindi</option>
+            <option>Gujarati</option>
+            <option>English</option>
+        </select>
 
-<input
- id="episode"
- type="text"
- placeholder="Example: Episode 1"
->
+        <label>Video Duration</label>
+        <select id="duration">
+            <option>30 Seconds</option>
+            <option>60 Seconds</option>
+            <option>3 Minutes</option>
+            <option>5 Minutes</option>
+            <option>10 Minutes</option>
+            <option>15 Minutes</option>
+        </select>
 
-<label>Video Language</label>
+        <label>Additional Instructions</label>
+        <textarea
+            id="instructions"
+            placeholder="Describe what kind of video you want..."
+        ></textarea>
 
-<select id="language">
- <option>Hindi</option>
- <option>Gujarati</option>
- <option>English</option>
-</select>
+        <button id="generateBtn" onclick="createProject()">
+            ✨ Generate AI Script
+        </button>
 
-<label>Video Duration</label>
+        <div id="status" class="status"></div>
 
-<select id="duration">
- <option>30 Seconds</option>
- <option>60 Seconds</option>
- <option>3 Minutes</option>
- <option>5 Minutes</option>
- <option>10 Minutes</option>
- <option>15 Minutes</option>
-</select>
+        <div id="scriptBox" class="script-box">
 
-<label>Additional Instructions</label>
+            <h3>📝 Your AI Script</h3>
 
-<textarea
- id="instructions"
- placeholder="Describe what kind of video you want..."
-></textarea>
+            <div id="result" class="result"></div>
 
-<button id="generateBtn" onclick="createProject()">
- ✨ Generate AI Script
-</button>
+            <div class="actions">
+                <button onclick="copyScript()">
+                    📋 Copy Script
+                </button>
 
-<div id="status" class="status"></div>
+                <button class="secondary" onclick="downloadScript()">
+                    ⬇ Download Script
+                </button>
+            </div>
 
-<div id="scriptBox" class="script-box">
+        </div>
 
-<h3>📝 Your AI Script</h3>
+    </section>
 
-<div id="result" class="result"></div>
+    <!-- VIDEO EDITOR -->
 
-<div class="actions">
+    <section class="panel" id="upload">
 
-<button onclick="copyScript()">
- 📋 Copy Script
-</button>
+        <h2>✂️ Video Editor</h2>
 
-<button class="secondary" onclick="downloadScript()">
- ⬇ Download Script
-</button>
+        <p>
+            Select a video file that you own or have permission to use.
+        </p>
 
-</div>
+        <br>
 
-</div>
+        <label>Select Video</label>
 
-</section>
+        <input
+            type="file"
+            id="videoFile"
+            accept="video/*"
+        >
 
-<!-- VIDEO UPLOAD -->
+        <div id="fileInfo" class="file-info"></div>
 
-<section class="panel" id="upload">
+        <video
+            id="videoPreview"
+            controls
+            style="display:none;width:100%;margin-top:15px;border-radius:12px"
+        ></video>
 
-<h2>📁 Upload Your Video</h2>
+        <div class="notice">
+            Video selection and preview are available.
+            Automatic editing is not connected yet.
+        </div>
 
-<p style="color:#aaa;font-size:13px">
- Select a video that you own or have permission to use.
-</p>
+    </section>
 
-<br>
+    <!-- AI VOICE -->
 
-<label>Select Video</label>
+    <section class="panel" id="voicePanel">
 
-<input
- type="file"
- id="videoFile"
- accept="video/*"
->
+        <h2>🎙️ AI Hindi Voice Studio</h2>
 
-<div id="fileInfo" class="file-info"></div>
+        <label>Script for Voiceover</label>
+        <textarea
+            id="voiceText"
+            placeholder="Paste your Hindi script here..."
+        ></textarea>
 
-<video
- id="videoPreview"
- controls
- style="display:none;width:100%;margin-top:15px;border-radius:12px"
-></video>
+        <label>Voice Language</label>
+        <select id="voiceLanguage">
+            <option>Hindi</option>
+        </select>
 
-</section>
+        <div class="notice">
+            AI voice generation will be connected in a future update.
+        </div>
 
-<!-- PROJECTS -->
+    </section>
 
-<section class="panel">
+    <!-- HINDI DUBBING -->
 
-<h2>📂 My Projects</h2>
+    <section class="panel" id="dubbingPanel">
 
-<div id="projects" class="result">
- No projects created yet.
-</div>
+        <h2>🌐 Hindi Dubbing Studio</h2>
 
-</section>
+        <p>
+            Hindi dubbing workflow for videos you own
+            or are authorized to adapt.
+        </p>
+
+        <div class="notice">
+            The dubbing module is prepared.
+            Actual audio translation and dubbing are not connected yet.
+        </div>
+
+    </section>
+
+    <!-- MUSIC STUDIO -->
+
+    <section class="panel" id="musicPanel">
+
+        <h2>🎵 Music Studio</h2>
+
+        <label>Describe Your Music</label>
+        <textarea
+            id="musicPrompt"
+            placeholder="Example: Emotional anime background music..."
+        ></textarea>
+
+        <label>Music Mood</label>
+        <select id="musicMood">
+            <option>Anime</option>
+            <option>Emotional</option>
+            <option>Action</option>
+            <option>Peaceful</option>
+            <option>Epic</option>
+        </select>
+
+        <div class="notice">
+            AI music generation is not connected yet.
+            Use music you have permission to use.
+        </div>
+
+    </section>
+
+    <!-- YOUTUBE UPLOAD -->
+
+    <section class="panel" id="youtubePanel">
+
+        <h2>📤 YouTube Upload Studio</h2>
+
+        <label>Video Title</label>
+        <input
+            id="youtubeTitle"
+            type="text"
+            placeholder="Enter your YouTube video title..."
+        >
+
+        <label>Video Description</label>
+        <textarea
+            id="youtubeDescription"
+            placeholder="Write your video description..."
+        ></textarea>
+
+        <div class="notice">
+            YouTube account connection and actual uploading
+            are not connected yet.
+        </div>
+
+    </section>
+
+    <!-- PROJECT HISTORY -->
+
+    <section class="panel">
+
+        <h2>📂 My Projects</h2>
+
+        <div id="projects" class="result">
+            No projects created yet.
+        </div>
+
+    </section>
 
 </main>
 
 <footer>
- Anime Studio AI © 2026
- <br><br>
- Made for Anime Creators
+    Anime Studio AI © <span id="currentYear">2026</span>
+    <br><br>
+    Made for Anime Creators
 </footer>
 
 <script>
-
-// BACKEND URL
-const API_URL =
-"https://anime-studio-ai.onrender.com";
-
-// SAVE CURRENT SCRIPT
-let currentScript = "";
-
-// OPEN CREATOR
-function openCreator(type){
-
- document.getElementById("type").value = type;
-
- scrollToCreator();
-
-}
-
-function scrollToCreator(){
-
- document.getElementById("creator").scrollIntoView({
-  behavior:"smooth"
- });
-
-}
-
-function scrollToUpload(){
-
- document.getElementById("upload").scrollIntoView({
-  behavior:"smooth"
- });
-
-}
-
-// CREATE AI PROJECT
-async function createProject(){
-
- const anime =
- document.getElementById("anime").value.trim();
-
- const episode =
- document.getElementById("episode").value.trim();
-
- const type =
- document.getElementById("type").value;
-
- const language =
- document.getElementById("language").value;
-
- const duration =
- document.getElementById("duration").value;
-
- const instructions =
- document.getElementById("instructions").value;
-
- const status =
- document.getElementById("status");
-
- const result =
- document.getElementById("result");
-
- const scriptBox =
- document.getElementById("scriptBox");
-
- const generateBtn =
- document.getElementById("generateBtn");
-
- if(!anime){
-
-  alert("Please enter Anime Name!");
-
-  return;
-
- }
-
- // SHOW LOADING
- generateBtn.disabled = true;
-
- generateBtn.innerText = "Generating...";
-
- status.innerText =
- "⏳ Connecting to Anime Studio AI...";
-
- scriptBox.style.display = "none";
-
- try{
-
-  const response = await fetch(
-   API_URL + "/generate-script",
-   {
-    method:"POST",
-
-    headers:{
-     "Content-Type":"application/json"
-    },
-
-    body:JSON.stringify({
-
-     anime:anime,
-
-     episode:episode || "Not specified",
-
-     video_type:type,
-
-     language:language,
-
-     duration:duration,
-
-     instructions:instructions
-
-    })
-
-   }
-  );
-
-  const data = await response.json();
-
-  if(!response.ok){
-
-   throw new Error(
-    data.detail || "AI generation failed"
-   );
-
-  }
-
-  if(!data.script){
-
-   throw new Error("AI returned an empty script.");
-
-  }
-
-  currentScript = data.script;
-
-  result.textContent = currentScript;
-
-  scriptBox.style.display = "block";
-
-  status.innerText =
-   "✅ Your AI Script is ready!";
-
-  // UPDATE PROJECT HISTORY
-  const projects =
-   document.getElementById("projects");
-
-  if(projects.innerText === "No projects created yet."){
-
-   projects.innerText = "";
-
-  }
-
-  const project = document.createElement("p");
-
-  project.textContent =
-   "📄 " + anime + " - " + type;
-
-  projects.prepend(project);
-
-  scriptBox.scrollIntoView({
-   behavior:"smooth",
-   block:"start"
-  });
-
- }
- catch(error){
-
-  status.innerText =
-   "❌ " + error.message +
-   "\nPlease try again. Check your Backend if needed.";
-
- }
- finally{
-
-  generateBtn.disabled = false;
-
-  generateBtn.innerText =
-   "✨ Generate AI Script";
-
- }
-
-}
-
-// COPY SCRIPT
-async function copyScript(){
-
- if(!currentScript) return;
-
- try{
-
-  await navigator.clipboard.writeText(currentScript);
-
-  alert("Script copied successfully!");
-
- }
- catch(error){
-
-  alert("Copy failed. Please select and copy the script manually.");
-
- }
-
-}
-
-// DOWNLOAD SCRIPT
-function downloadScript(){
-
- if(!currentScript) return;
-
- const blob = new Blob(
-  [currentScript],
-  {type:"text/plain;charset=utf-8"}
- );
-
- const url = URL.createObjectURL(blob);
-
- const a = document.createElement("a");
-
- a.href = url;
-
- a.download = "anime-script.txt";
-
- a.click();
-
- URL.revokeObjectURL(url);
-
-}
-
-// VIDEO FILE PREVIEW
-document
-.getElementById("videoFile")
-.addEventListener("change",function(){
-
- const file = this.files[0];
-
- const info =
- document.getElementById("fileInfo");
-
- const preview =
- document.getElementById("videoPreview");
-
- if(!file){
-
-  info.innerText = "";
-
-  preview.style.display = "none";
-
-  return;
-
- }
-
- info.innerText =
- "Selected: " + file.name +
- " | Size: " +
- (file.size / 1024 / 1024).toFixed(2) +
- " MB";
-
- const videoURL = URL.createObjectURL(file);
-
- preview.src = videoURL;
-
- preview.style.display = "block";
-
-});
-
+    function scrollToFeature(id) {
+        const section = document.getElementById(id);
+
+        if (section) {
+            section.scrollIntoView({
+                behavior: "smooth"
+            });
+        }
+    }
 </script>
 
 </body>
